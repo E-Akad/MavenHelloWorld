@@ -1,0 +1,23 @@
+name: build_pipeline
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - master
+
+jobs:
+  file_download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: change file
+        run: |
+          echo "${{ secrets.SEC_FILE }}" > secret_file.txt
+          echo "File downloaded trial 1." >> secret_file.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: change file
+          path: secret_file.txt
